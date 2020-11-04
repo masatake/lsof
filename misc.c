@@ -771,7 +771,7 @@ enter_nm(m)
 
 void
 Exit(xv)
-	int xv;				/* exit() value */
+	enum ExitStatus xv;				/* exit() value */
 {
 	(void) childx();
 
