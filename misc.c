@@ -171,7 +171,7 @@ childx()
 			    "%s: WARNING -- child process %d may be hung.\n",
 			    Pn, (int)Cpid);
 		    break;
-	        }
+		}
 	    /*
 	     * Send the next signal to the child process, after the first pass
 	     * through the loop.
@@ -728,7 +728,7 @@ dup_IP_state:
 		    Pn, ty, nr,
 		    tx ? UdpSt[nr + UdpStOff] : TcpSt[nr + TcpStOff],
 		    nm);
-	 	Exit(1);
+		Exit(1);
 	    }
 	    UdpSt[nr + UdpStOff] = cp;
 	} else {
@@ -1036,7 +1036,7 @@ lstatsafely(path, buf)
 	struct stat *buf;		/* stat buffer address */
 {
 	if (Fblock) {
-	    if (!Fwarn) 
+	    if (!Fwarn)
 		(void) fprintf(stderr,
 		    "%s: avoiding stat(%s): -b was specified.\n",
 		    Pn, path);
@@ -1480,7 +1480,7 @@ safestrprt(sp, fs, flags)
 			    }
 			} else {
 			    for (lnt = 0; lnt < lnc; lnt++) {
-			        fputs(safepup((unsigned int)*(sp + lnt),
+				fputs(safepup((unsigned int)*(sp + lnt),
 					      (int *)NULL), fs);
 			    }
 			}
@@ -1576,7 +1576,7 @@ statsafely(path, buf)
 	struct stat *buf;		/* stat buffer address */
 {
 	if (Fblock) {
-	    if (!Fwarn) 
+	    if (!Fwarn)
 		(void) fprintf(stderr,
 		    "%s: avoiding stat(%s): -b was specified.\n",
 		    Pn, path);
