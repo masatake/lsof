@@ -739,28 +739,34 @@
 16. The Lsof Exit Code and Shell Scripts
 ========================================
 
-  When lsof exits successfully it returns an exit code based on
+  When lsof executes successfully, it returns an exit code based on
   the result of its search for specified files.  (If no files were
   specified, then the successful exit code is 0 (zero).)
 
   If lsof was asked to search for specific files, including any
   files on specified file systems, it returns an exit code of 0
   (zero) if it found all the specified files and at least one file
-  on each specified file system.  Otherwise it returns a 1 (one).
+  on each specified file system.  Otherwise it returns a 1 (one) if
+  any part of the search failed.
 
-  If lsof detects an error and makes an unsuccessful exit, it
-  returns an exit code of 1 (one).
+  If lsof detects a generic (non-search) error during its execution,
+  it returns an exit code of 2 (two).
 
   You can use the exit code in a shell script to search for files
   on a file system and take action based on the result -- e.g.,
 
     #!/bin/sh
     lsof <file_system_name> > /dev/null 2>&1
-    if test $? -eq 0
+    err=$?
+    if test $err -eq 0
     then
       echo "<file_system_name> has some users."
-    else
+    elif test $err -eq 1
+    then
       echo "<file_system_name> may have no users."
+    else
+      echo "failed to run lsof!" 1>&2
+      exit 1
     fi
 
 
