@@ -4197,9 +4197,11 @@ format specification.
 Errors are identified with messages on the standard error file.
 .PP
 .I Lsof
-returns a one (1) if any error was detected, including the failure to
+returns a non-zero exit value if any error was detected, including the failure to
 locate command names, file names, Internet addresses or files, login
-names, NFS files, PIDs, PGIDs, or UIDs it was asked to list.
+names, NFS files, PIDs, PGIDs, or UIDs it was asked to list. An exit value
+of two (2) indicates a generic error, while an exit value of one (1) indicates
+a failure to find a search item.
 If the
 .B \-V
 option is specified,
@@ -4293,6 +4295,23 @@ lsof -p 456,123,789 -u 1234,abe
 To list all open files on device /dev/hd4, use:
 .IP
 lsof /dev/hd4
+.PP
+To take some action only if a filesystem has no users:
+.IP
+.nf
+lsof /u/abe/music >/dev/null 2>&1
+err=$?
+if test $err -eq 0
+then
+  echo "busy, delaying restart"
+elif test $err -eq 1
+then
+  sytemctl restart music-stream.service
+else
+  echo "failed to run lsof!" 1>&2
+  exit 1
+fi
+.fi
 .PP
 To find the process that has /u/abe/foo open, use:
 .IP
